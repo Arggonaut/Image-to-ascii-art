@@ -13,10 +13,14 @@ const char DENSITY_CHARS[] = "_.=+:;!?c71236089$W#@"; //a list of characters bas
 const double DENSITY_CHAR_RANGE = MAX_BRIGHTNESS / (float) (strlen(DENSITY_CHARS)); //the amount of values each density character accounts for
 
 int main(void) {
+    //declare an fileName string and ask for user to input the target file
+     char fileName[255];
+     printf("File Name: ");
+     scanf("%s", fileName);
+    
     //Load the image
     int imageWidth, imageHeight, channels = 0; //declare parameters for the image and set them to 0 for now
-    char imageName[] = "dog.jpg"; //declare and set imageName string to the name of the image file
-    unsigned char *image = stbi_load(imageName, &imageWidth, &imageHeight, &channels, 0); //load the image using stb_image
+    unsigned char *image = stbi_load(fileName, &imageWidth, &imageHeight, &channels, 0); //load the image using stb_image
     if (image == NULL) { //if image is NULL, loading failed
         printf("Error in loading image\n"); //print an error message
         exit(1); //close with an error status
@@ -25,7 +29,7 @@ int main(void) {
     //resize the image to what we want the output ascii art's dimensions to be
     double heightToWidthRatio = imageHeight / (float) imageWidth;
     int width = 128;               //will be changed when gui gets implemented
-    int height = (int) (width * heightToWidthRatio) / 2; //terminal font is about 2.5 x 1
+    int height = (int) (width * heightToWidthRatio) / 2.3; //terminal font is about 2.3 x 1
     unsigned char* resizedImage = stbir_resize_uint8_srgb(image,  imageWidth,  imageHeight,  0, 
                                                         NULL, width, height, 0, channels);
     if (resizedImage == NULL) {
@@ -53,6 +57,10 @@ int main(void) {
 
     //turn the resized image into ascii
     convertImageToAscii(resizedImage, imageSize, channels, width, outputAscii);
+
+    //the resizedImage malloc is no longer needed so free and set resizedImage to NULL
+    stbi_image_free(resizedImage);
+    resizedImage = NULL;
 
     //loop through each row of the outputAscii array and print it out
     for (int i = 0; i < height; i++) {
