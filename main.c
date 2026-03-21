@@ -15,7 +15,7 @@ const double DENSITY_CHAR_RANGE = MAX_BRIGHTNESS / (float) (strlen(DENSITY_CHARS
 int main(void) {
     //Load the image
     int imageWidth, imageHeight, channels = 0; //declare parameters for the image and set them to 0 for now
-    char imageName[] = "64x64_Gradient_Horizontal.jpg"; //declare and set imageName string to the name of the image file
+    char imageName[] = "dog.jpg"; //declare and set imageName string to the name of the image file
     unsigned char *image = stbi_load(imageName, &imageWidth, &imageHeight, &channels, 0); //load the image using stb_image
     if (image == NULL) { //if image is NULL, loading failed
         printf("Error in loading image\n"); //print an error message
@@ -23,9 +23,9 @@ int main(void) {
     }
 
     //resize the image to what we want the output ascii art's dimensions to be
-    double heightToWidthRatio = imageHeight / imageWidth;
+    double heightToWidthRatio = imageHeight / (float) imageWidth;
     int width = 128;               //will be changed when gui gets implemented
-    int height = (int) (width * heightToWidthRatio) / 2.5; //terminal font is about 2.5 x 1
+    int height = (int) (width * heightToWidthRatio) / 2; //terminal font is about 2.5 x 1
     unsigned char* resizedImage = stbir_resize_uint8_srgb(image,  imageWidth,  imageHeight,  0, 
                                                         NULL, width, height, 0, channels);
     if (resizedImage == NULL) {
