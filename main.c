@@ -28,7 +28,9 @@ int main(void) {
 
     //resize the image to what we want the output ascii art's dimensions to be
     double heightToWidthRatio = imageHeight / (float) imageWidth;
-    int width = 128;               //will be changed when gui gets implemented
+    int width;               //will be changed when gui gets implemented
+    printf("Width: ");
+    scanf("%d", &width);
     int height = (int) (width * heightToWidthRatio) / 2.3; //terminal font is about 2.3 x 1
     unsigned char* resizedImage = stbir_resize_uint8_srgb(image,  imageWidth,  imageHeight,  0, 
                                                         NULL, width, height, 0, channels);
