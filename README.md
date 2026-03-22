@@ -1,5 +1,4 @@
 # Image-to-ascii-art
-font-family: monospace;
 
 This program uses the STB library to convert an image to ASCII art
 After compiling main.c and running it, the program will ask for a file name. The file has to be an image in the same directory as the program
